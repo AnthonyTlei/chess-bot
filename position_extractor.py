@@ -74,10 +74,8 @@ def recognize_piece(square_image, templates):
                 best_match = piece_name
 
     if highest_val > threshold:
-        # print(f"Recognized {best_match} with confidence {highest_val}")
         return best_match
     else:
-        # print("No piece recognized in this square.")
         return None
     
 def board_to_fen(squares, templates):
@@ -97,7 +95,13 @@ def board_to_fen(squares, templates):
         if empty_count > 0:
             fen_row.append(str(empty_count))
         fen_rows.append(''.join(fen_row))
-    fen = '/'.join(fen_rows) + ' w KQkq - 0 1'
+    
+    # Ask the user for the turn
+    turn = input("Enter 'w' for White's turn, 'b' for Black's turn: ").strip().lower()
+    while turn not in ['w', 'b']:
+        turn = input("Invalid input. Please enter 'w' for White or 'b' for Black: ").strip().lower()
+
+    fen = '/'.join(fen_rows) + f' {turn} KQkq - 0 1'
     return fen
 
 def extract_position(board_image_path, fixed_size=(824, 824)):

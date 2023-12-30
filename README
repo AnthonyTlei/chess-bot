@@ -1,2 +1,7 @@
-To install dependencies:
+1) Install dependencies
 pip install -r requirements.txt
+
+2) Add engine path to .env
+STOCKFISH_ENGINE_PATH="path-to/stockfish/stockfish.exe"
+
+3) python main.py
