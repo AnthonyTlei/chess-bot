@@ -75,11 +75,6 @@ def detect_chessboard(image_path):
         # Rotate and flip the extracted chessboard
         corrected_chessboard = rotate_and_flip_image(result)
         
-        # Show the corrected chessboard
-        cv2.imshow('Corrected Chessboard', corrected_chessboard)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-        
         return corrected_chessboard
     else:
         print("No chessboard found.")
