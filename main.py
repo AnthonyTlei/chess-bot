@@ -2,7 +2,9 @@ import keyboard
 import screen_capture
 import chessboard_detector
 import chess_position_extractor
+import chessboard_visualizer
 import utils
+import webbrowser
 
 def on_hotkey():
     print("Hotkey pressed, capturing screen...")
@@ -24,6 +26,10 @@ def on_hotkey():
         print(f"Extracted FEN: {fen}")
     else:
         print("Chessboard could not be detected.")
+
+    # Draw the chessboard
+    chessboard_visualizer.draw_chessboard(fen, save_path='board.svg')
+    webbrowser.open('board.svg')
 
 # Register the hotkey and associate it with the on_hotkey() function
 keyboard.add_hotkey('shift+alt+5', on_hotkey)

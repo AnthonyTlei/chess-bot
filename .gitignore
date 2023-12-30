@@ -141,3 +141,4 @@ cython_debug/
 # Temp files
 screen.png
 board.png
+board.svg
