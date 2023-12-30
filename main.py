@@ -1,22 +1,29 @@
-import cv2
-import numpy as np
 import keyboard
 import screen_capture
 import chessboard_detector
+import chess_position_extractor
+import utils
 
-# This function will be triggered when the hotkey is pressed
 def on_hotkey():
     print("Hotkey pressed, capturing screen...")
     # Capture the screen
     screen_capture.capture_screen("screen.png")
 
     # Detect and correct the chessboard
-    board = chessboard_detector.detect_chessboard("screen.png")
+    chessboard_image = chessboard_detector.detect_chessboard("screen.png")
 
-    # Show the corrected chessboard
-    cv2.imshow('Chessboard', board)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # Save chessboard image as board.png
+    utils.write_image(chessboard_image, "board.png")
+
+    # Display the chessboard
+    # utils.display_image(chessboard_image, title="Chessboard")
+
+    # Extract the chess position
+    if chessboard_image is not None:
+        fen = chess_position_extractor.extract_position("board.png")
+        print(f"Extracted FEN: {fen}")
+    else:
+        print("Chessboard could not be detected.")
 
 # Register the hotkey and associate it with the on_hotkey() function
 keyboard.add_hotkey('shift+alt+5', on_hotkey)
