@@ -69,15 +69,15 @@ def recognize_piece(square_image, templates):
         for template in template_set:
             res = cv2.matchTemplate(square_image, template, cv2.TM_CCOEFF_NORMED)
             min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-            if max_val > highest_val:
+            if max_val > highest_val and max_val < 1.0:
                 highest_val = max_val
                 best_match = piece_name
 
     if highest_val > threshold:
-        print(f"Recognized {best_match} with confidence {highest_val}")
+        # print(f"Recognized {best_match} with confidence {highest_val}")
         return best_match
     else:
-        print("No piece recognized in this square.")
+        # print("No piece recognized in this square.")
         return None
     
 def board_to_fen(squares, templates):
@@ -100,9 +100,14 @@ def board_to_fen(squares, templates):
     fen = '/'.join(fen_rows) + ' w KQkq - 0 1'
     return fen
 
-def extract_position(board_image_path):
+def extract_position(board_image_path, fixed_size=(824, 824)):
     # Load the board image in grayscale
     board_image = cv2.imread(board_image_path, cv2.IMREAD_GRAYSCALE)
+    original_size = board_image.shape
+
+    # Resize the board image to a fixed size
+    board_image = cv2.resize(board_image, fixed_size)
+    print(f"Resize board image from {original_size} to {board_image.shape}.")
 
     # Split the board into squares
     squares = split_board_into_squares(board_image)
