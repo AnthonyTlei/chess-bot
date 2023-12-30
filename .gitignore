@@ -137,3 +137,6 @@ cython_debug/
 
 # VS Code
 .vscode/
+
+# Temp files
+screen.png
