@@ -34,3 +34,7 @@
 ![Extracted Position](/demo/extracted.png)
 
 ![Output](/demo/output.png)
+
+# Disclaimer
+
+This software is developed for educational and studying purposes only. It's intended to help understand and analyze chess games for learning. Users are advised not to use this software for cheating in online or competitive chess environments. Misuse of this software for cheating violates the fair play policies of most chess platforms and can result in bans or other penalties.
