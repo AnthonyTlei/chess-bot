@@ -30,7 +30,7 @@ def on_hotkey():
     utils.write_image(chessboard_image, "board.png")
 
     # Display the chessboard
-    # utils.display_image(chessboard_image, title="Chessboard")
+    utils.display_image(chessboard_image, title="Chessboard")
 
     # Prepare board
     if chessboard_image is not None:
@@ -45,17 +45,12 @@ def on_hotkey():
     else:
         print("Chessboard could not be detected.")
 
-    # Draw the chessboard
+    # Draw & Display the chessboard
     if fen is not None:
         chessboard_visualizer.draw_chessboard(fen, save_path='board.svg')
+        webbrowser.open('board.svg')
     else:
         print("Chess position could not be extracted.")
-
-    # Display the chess position from the FEN in browser
-    # if fen is not None:
-    #     webbrowser.open('board.svg')
-    # else:
-    #     print("Chess position could not be extracted.")
 
     # Get the best move
     if fen is not None:
