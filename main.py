@@ -16,6 +16,7 @@ load_dotenv()
 
 # Retrieve the engine path
 engine_path = os.getenv('STOCKFISH_ENGINE_PATH')
+tesseract_path = os.getenv('TESSERACT_PATH')
 
 def on_hotkey():
     print("Hotkey pressed, capturing screen...")
@@ -50,7 +51,7 @@ def on_hotkey():
     else:
         print("Chess position could not be extracted.")
 
-    # Display the chess position from the FEN
+    # Display the chess position from the FEN in browser
     # if fen is not None:
     #     webbrowser.open('board.svg')
     # else:
@@ -58,7 +59,9 @@ def on_hotkey():
 
     # Get the best move
     if fen is not None:
-        best_move = chessboard_analyzer.get_best_move(fen, engine_path)
+        board, turn, best_move = chessboard_analyzer.get_best_move(fen, engine_path)
+        print(f"\n{board}\n")
+        print(f"Turn: {turn}\n")
         print(f"\nBest move: {best_move}\n\n")
     else:
         print("Chess position could not be extracted.")
