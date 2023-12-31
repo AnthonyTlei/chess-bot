@@ -1,11 +1,12 @@
 
+import chessboard_analyzer
 import chessboard_detector
+import chessboard_parser
+import chessboard_preparer
 import chessboard_visualizer
 from dotenv import load_dotenv
-import position_analyzer
 import keyboard
 import os
-import position_extractor
 import screen_capture
 import utils
 import webbrowser
@@ -30,20 +31,37 @@ def on_hotkey():
     # Display the chessboard
     # utils.display_image(chessboard_image, title="Chessboard")
 
-    # Extract the chess position
+    # Prepare board
     if chessboard_image is not None:
-        fen = position_extractor.extract_position("board.png")
+        prepared_board, is_flipped_board = chessboard_preparer.prepare_board("board.png")
+    else:
+        print("Chessboard could not be detected.")
+
+    # Extract the chess position
+    if prepared_board is not None:
+        fen = chessboard_parser.extract_position(prepared_board, is_flipped_board)
         print(f"Extracted FEN: {fen}")
     else:
         print("Chessboard could not be detected.")
 
     # Draw the chessboard
-    chessboard_visualizer.draw_chessboard(fen, save_path='board.svg')
-    # webbrowser.open('board.svg')
+    if fen is not None:
+        chessboard_visualizer.draw_chessboard(fen, save_path='board.svg')
+    else:
+        print("Chess position could not be extracted.")
+
+    # Display the chess position from the FEN
+    # if fen is not None:
+    #     webbrowser.open('board.svg')
+    # else:
+    #     print("Chess position could not be extracted.")
 
     # Get the best move
-    best_move = position_analyzer.get_best_move(fen, engine_path)
-    print(f"\nBest move: {best_move}\n\n")
+    if fen is not None:
+        best_move = chessboard_analyzer.get_best_move(fen, engine_path)
+        print(f"\nBest move: {best_move}\n\n")
+    else:
+        print("Chess position could not be extracted.")
 
 # Register the hotkey and associate it with the on_hotkey() function
 keyboard.add_hotkey('shift+alt+5', on_hotkey)

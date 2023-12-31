@@ -1,5 +1,7 @@
 import cv2
+from dotenv import load_dotenv
 import numpy as np
+import os
 import utils
 
 templates = {
@@ -104,17 +106,9 @@ def board_to_fen(squares, templates):
     fen = '/'.join(fen_rows) + f' {turn} KQkq - 0 1'
     return fen
 
-def extract_position(board_image_path, fixed_size=(824, 824)):
-    # Load the board image in grayscale
-    board_image = cv2.imread(board_image_path, cv2.IMREAD_GRAYSCALE)
-    original_size = board_image.shape
-
-    # Resize the board image to a fixed size
-    board_image = cv2.resize(board_image, fixed_size)
-    print(f"Resize board image from {original_size} to {board_image.shape}.")
-
+def extract_position(board, is_flipped=False):
     # Split the board into squares
-    squares = split_board_into_squares(board_image)
+    squares = split_board_into_squares(board)
 
     # Validate squares
     if not validate_squares(squares):
