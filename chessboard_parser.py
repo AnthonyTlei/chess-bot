@@ -1,7 +1,5 @@
 import cv2
-from dotenv import load_dotenv
 import numpy as np
-import os
 import utils
 
 templates = {
@@ -50,6 +48,12 @@ def validate_templates(templates):
         else:
             continue
     return valid
+
+def handle_flipped_board(squares):
+    squares = squares[::-1]
+    for idx, row in enumerate(squares):
+        squares[idx] = row[::-1]
+    return squares
 
 def split_board_into_squares(board_image):
     squares = []
@@ -109,18 +113,16 @@ def board_to_fen(squares, templates):
 def extract_position(board, is_flipped=False):
     # Split the board into squares
     squares = split_board_into_squares(board)
+    if is_flipped: 
+        squares = handle_flipped_board(squares)
 
     # Validate squares
     if not validate_squares(squares):
         print("Error splitting board into squares. Please check the board image.")
-    else:
-        print("Board split into squares successfully.")
         
     # Validate templates
     if not validate_templates(loaded_templates):
         print("Error loading some templates. Please check the template files.")
-    else:
-        print("All templates loaded successfully.")
 
     fen = board_to_fen(squares, loaded_templates)
     return fen
