@@ -1,8 +1,11 @@
 1) Install dependencies
 pip install -r requirements.txt
 
-2) Add engine path to .env
-STOCKFISH_ENGINE_PATH="path-to/stockfish/stockfish.exe"
+2) Download and add engine path to .env
+e.g. STOCKFISH_ENGINE_PATH="path-to/stockfish/stockfish.exe"
+
+3) Download and add Tesseract OCR path to .env
+e.g. TESSERACT_PATH="path-to/tesseract/tesseract.exe"
 
 3) Run the script 
 python main.py
